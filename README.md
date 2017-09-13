@@ -1,1 +1,1 @@
-# MovieRanking-API
+# RateTheMovie-API
