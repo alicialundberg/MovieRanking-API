@@ -40,7 +40,7 @@
   <script>
   function build_imdb_search_url(pattern) {
     var base_url = "http://www.theimdbapi.org/api/find/movie?title=";
-    var url = base_url + pattern + "&callback=?";
+    var url = base_url + pattern;
     return url;
   }
   $(document).ready(function() {
@@ -52,9 +52,8 @@
       var url = build_imdb_search_url(replaced);
       console.log(url);
 
-      $.getJSON(url, function(data) {  //Not working yet
-        console.log(data);
-        json = data;
+      $.getJSON(url, function(json) { 
+        console.log(json);
         for (var i = 0; i < json.length; i++) {
          var row = $("<tr>");
           $(row).append("<td>" + json[i].title + "</td>");
