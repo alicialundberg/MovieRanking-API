@@ -54,7 +54,7 @@
 
       $.getJSON(url, function(data) {  //Not working yet
         console.log(data);
-        data = json;
+        json = data;
         for (var i = 0; i < json.length; i++) {
          var row = $("<tr>");
           $(row).append("<td>" + json[i].title + "</td>");
