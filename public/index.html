@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Rate The Movie </title>
+    <title>Rate The Movie</title>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,  minimum-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -15,12 +15,60 @@
         <div class="nav pull-right">
           <form class="navbar-form navbar-left">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search for a movie">
+              <input type="text" id="search" class="form-control" placeholder="Search for a movie">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" id="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
       </div>
     </div>
+    <div class="container">
+      <table id="showList" class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>Genre</th>
+              <th>IMDB Rating</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+      </table>
+    </div>
   </body>
+  <script>
+  function build_imdb_search_url(pattern) {
+    var base_url = "http://www.theimdbapi.org/api/find/movie?title=";
+    var url = base_url + pattern + "&callback=?";
+    return url;
+  }
+  $(document).ready(function() {
+    $("#submit").click(function(e) {
+      e.preventDefault();
+      console.log("Submit button clicked");
+      var pattern = $("#search").val();
+      var replaced = pattern.split(' ').join('+');
+      var url = build_imdb_search_url(replaced);
+      console.log(url);
+
+      $.getJSON(url, function(data) {  //Not working yet
+        console.log(data);
+        data = json;
+        for (var i = 0; i < json.length; i++) {
+         var row = $("<tr>");
+          $(row).append("<td>" + json[i].title + "</td>");
+          $(row).append("<td>" + json[i].year + "</td>");
+          $(row).append("<td>" + json[i].genre + "</td>");
+          $(row).append("<td>" + json[i].rating + "</td>");
+          $(row).append("<td>" + json[i].description + "</td>");
+          $(row).append("</tr>");
+          $("#showList tbody").append(row);
+        };
+       });
+    });
+  });
+
+
+  </script>
   </html>
