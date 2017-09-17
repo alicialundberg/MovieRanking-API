@@ -30,7 +30,7 @@
       <table id="myMovielist" class="table">
           <thead>
             <tr>
-              <th style"display:none">CouchDB ID</th>
+              <th style="display:none">CouchDB ID</th>
               <th>Title</th>
               <th>Year</th>
               <th>Genre</th>
@@ -48,14 +48,28 @@
        var json = data;
        for (var i = 0; i < json.length; i++) {
          var row = $("<tr>");
-         $(row).append("<td style='display:none'>" + json[i]._id + "</td>");
+         $(row).append("<td class='id' style='display:none'>" + json[i]._id + "</td>");
           $(row).append("<td>" + json[i].title + "</td>");
           $(row).append("<td>" + json[i].year + "</td>");
           $(row).append("<td>" + json[i].genre + "</td>");
           $(row).append("<td>" + json[i].rating + "</td>");
           $(row).append("<td>" + json[i].ownrating + "</td>");
+          $(row).append("<button type='button' class='del btn btn-danger'><td>" + "Delete" + "</td></button>");
           $(row).append("</tr>");
           $("#myMovielist tbody").append(row);
+
+          $(".del").click(function() {
+            // Pull out ID.
+            var row = $(this).closest("tr"); // Find the row.
+            var text = row.find(".id").text(); // Find the row's content (ID).
+
+            $.ajax( {
+                type: "DELETE",
+                url: "http://localhost:8080/movies" + text
+            });
+            window.location.reload();
+          });
+
         };
      });
    });
