@@ -1,0 +1,72 @@
+{
+  "_id": "1a8ee7b3-595b-44f4-b8e1-a31c3aaf8d31",
+  "_rev": "1-fdf70f472b624faeaa9b5ab8e9860528",
+  "title": "Pi",
+  "year": "1998",
+  "genre": "Drama,Horror,Mystery",
+  "rating": "7.5",
+  "ownrating": "7.7"
+},
+{
+  "_id": "78691478-c60b-420d-b320-08d5461ae3bc",
+  "_rev": "1-9c518fb37b604f9cafaef79b7bde4f86",
+  "title": "Pulp Fiction",
+  "year": "1994",
+  "genre": "Crime,Drama",
+  "rating": "8.9",
+  "ownrating": "8.7"
+},
+{
+  "_id": "7cd1b392-3eeb-42d0-8b83-c44645005e79",
+  "_rev": "1-fdeda765214a4363b4b1ecb2f26d6d94",
+  "title": "La habitación de Fermat",
+  "year": "2007",
+  "genre": "Mystery,Thriller",
+  "rating": "6.7",
+  "ownrating": "7.6"
+},
+{
+  "_id": "86183eef-3c58-4eb7-86fd-83eb77a36061",
+  "_rev": "1-fe5602a6c4d64c51b6648235f7f69f30",
+  "title": "Cube",
+  "year": "1997",
+  "genre": "Drama,Mystery,Sci-Fi",
+  "rating": "7.3",
+  "ownrating": "7.5"
+},
+{
+  "_id": "d413f7d9-dd17-47a7-8c2e-3af2b7572533",
+  "_rev": "1-8c6e1c08e7fb4275b55236a8bc379f13",
+  "title": "Pi",
+  "year": "1998",
+  "genre": "Drama,Horror,Mystery",
+  "rating": "7.5",
+  "ownrating": "7.9"
+},
+{
+  "_id": "eced9507-0b2e-4769-9046-3475ff10b421",
+  "_rev": "1-451437e7c23b4745a650c6d2c146184f",
+  "title": "Johan Falk: Kodnamn: Lisa",
+  "year": "2012",
+  "genre": "Action,Crime,Thriller",
+  "rating": "7.5",
+  "ownrating": "8.1"
+},
+{
+  "_id": "eb071acc-c194-4175-9247-d13bd7f11061",
+  "_rev": "1-c258abab586b43d88485e9bf5c51b44f",
+  "title": "Cube",
+  "year": "1997",
+  "genre": "Drama,Mystery,Sci-Fi",
+  "rating": "7.3",
+  "ownrating": "7.5"
+},
+{
+  "_id": "f9c0efb6-c04b-4066-9519-180642349867",
+  "_rev": "1-f1138110988444039c520ce6c6f04d72",
+  "title": "Ocean's Eleven",
+  "year": "2001",
+  "genre": "Crime,Thriller",
+  "rating": "7.8",
+  "ownrating": "7.5"
+},
