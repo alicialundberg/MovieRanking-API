@@ -7,42 +7,91 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
   </head>
   <body>
     <div class="navbar navbar-inverse">
       <div class="container">
-        <a class="navbar-brand" href="#">Your Own Movie Database</a>
+        <a class="navbar-brand" href="mymovies.html">Your Own Movie Database</a>
         <div class="nav pull-right">
           <form class="navbar-form navbar-left">
             <div class="form-group">
               <input type="text" id="search" class="form-control" placeholder="Search for a movie">
             </div>
             <button type="submit" id="submit" class="btn btn-default">Submit</button>
+            <button id="refresh-btn" class="btn btn-info">Refresh Searchlist</button>
           </form>
         </div>
+      </div>
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+      <h1>Rate the Movie</h1>
+      <p>This website is your personal movie database with only the movies you like and dislike. Give the movies your own ratings and share it with friends!</p>
       </div>
     </div>
     <div class="container">
       <table id="showList" class="table">
           <thead>
             <tr>
+              <th style="display:none">IMDB ID</th>
               <th>Title</th>
               <th>Year</th>
               <th>Genre</th>
               <th>IMDB Rating</th>
               <th>Description</th>
+              <th style="display:none">IMG src</th>
             </tr>
           </thead>
           <tbody></tbody>
       </table>
     </div>
+    <div id="addMovie" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add movie and your own movierating to database!</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-inline" action="http://localhost:8080/addmovies" method="post">
+                  <div class="col-md-4 form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" name="title" value="">
+                    <label for="year">Year</label>
+                    <input type="text" id="year" class="form-control" name="year" value="">
+                    <label for="genre">Genre</label>
+                    <input type="text" id="genre" class="form-control" name="genre" value="">
+                    <label for="rating">IMDB Rating</label>
+                    <input type="text" id="rating" class="form-control" name="rating" value="">
+                    <label for="ownrating">Insert your own rating:</label>
+                    <input type="text" id="ownrating" class="form-control" name="ownrating" placeholder="Your own rating"><br>
+                    <input type="submit" value="Submit">
+                  </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script>
+  function RefreshTable() {
+      $( "#showList" ).load( "index.html #showList" );
+  }
+
+  $("#refresh-btn").on("click", RefreshTable);
+
   function build_imdb_search_url(pattern) {
     var base_url = "http://www.theimdbapi.org/api/find/movie?title=";
     var url = base_url + pattern;
     return url;
   }
+
   $(document).ready(function() {
     $("#submit").click(function(e) {
       e.preventDefault();
@@ -52,22 +101,37 @@
       var url = build_imdb_search_url(replaced);
       console.log(url);
 
-      $.getJSON(url, function(json) { 
-        console.log(json);
-        for (var i = 0; i < json.length; i++) {
-         var row = $("<tr>");
-          $(row).append("<td>" + json[i].title + "</td>");
-          $(row).append("<td>" + json[i].year + "</td>");
-          $(row).append("<td>" + json[i].genre + "</td>");
-          $(row).append("<td>" + json[i].rating + "</td>");
-          $(row).append("<td>" + json[i].description + "</td>");
-          $(row).append("</tr>");
-          $("#showList tbody").append(row);
+      $.getJSON(url, function(json) {  //Not working yet
+          for (var i = 0; i < json.length; i++) {
+            var row = $("<tr>");
+            $(row).append("<td class='id' style='display:none'>" + json[i].imdb_id + "</td>");
+            $(row).append("<td class='title'>" + json[i].title + "</td>");
+            $(row).append("<td class='year'>" + json[i].year + "</td>");
+            $(row).append("<td class='genre'>" + json[i].genre + "</td>");
+            $(row).append("<td class='rating'>" + json[i].rating + "</td>");
+            $(row).append("<td>" + json[i].description + "</td>");
+            $(row).append("<button type='button' data-toggle='modal' data-target='#addMovie' class='add btn-success'><td>" + "Add Movie" + "</td></button>");
+            $(row).append("</tr>");
+            $("#showList tbody").append(row);
+
+            $(".add").click(function() {
+                // Pull out ID.
+              var row = $(this).closest("tr"); // Find the row.
+              var title = row.find(".title").text();
+              var year = row.find(".year").text();
+              var genre = row.find(".genre").text();
+              var rating = row.find(".rating").text();
+
+              document.getElementById('title').value = title;
+              document.getElementById('year').value = year;
+              document.getElementById('genre').value = genre;
+              document.getElementById('rating').value = rating;
+          });
+
         };
        });
     });
   });
-
 
   </script>
   </html>
