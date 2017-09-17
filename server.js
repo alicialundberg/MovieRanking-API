@@ -10,7 +10,7 @@ var app = Express();
 var database = new PouchDB('movie_rating');
 
 //Här skapas en remote CouchDB databas som ska synkas mot den lokala databasen
-var remoteDB = 'http://localhost:5984/movierating/'
+var remoteDB = 'http://localhost:5984/movie_rating/'
 
 sync();
 
@@ -34,8 +34,25 @@ app.get('/', function (req, res) {
     } else {
         console.log("Error, check your code!");
     }
-
 });
+
+//Route som hämtar alla dokument från databasen
+app.get("/movies", function (req, res, next) {
+  database.allDocs({include_docs: true}).then(function(result) {
+          res.send(result.rows.map(function(item) {
+              return item.doc;
+          }));
+      }, function(error) {
+          res.status(400).send(error);
+      });
+  });
+
+  //Route som postar ny data till tvshows-databasen
+  app.post("/addmovies", function (req, res) {
+    database.post(req.body).then(function(result) {
+      res.sendFile(path.join(__dirname+'/public/mymovies.html'));
+    });
+  });
 
 app.listen(8080, function (error) {
     if (!error) {
