@@ -9,7 +9,7 @@ var app = Express();
 //Här skapas den lokala databasen, mapp movie_rating
 var database = new PouchDB('movie_rating');
 
-//Här skapas en remote CouchDB databas som ska synkas mot den lokala databasen
+//Här skapas en remote CouchDB databas som sedan ska synkas mot den lokala databasen
 var remoteDB = 'http://localhost:5984/movie_rating/'
 
 sync();
@@ -47,7 +47,7 @@ app.get("/movies", function (req, res, next) {
       });
   });
 
-  //Route som postar ny data till tvshows-databasen
+  //Route som postar ny data till movierating-databasen
   app.post("/addmovies", function (req, res) {
     database.post(req.body).then(function(result) {
       res.sendFile(path.join(__dirname+'/public/mymovies.html'));
