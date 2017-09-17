@@ -27,8 +27,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(Express.static(path.join(__dirname, 'public')));
 
+//Initierar CORS för att servern och browsern ska kunna interagera
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 //Route till servern
-app.get('/', function (req, res) {
+app.get('/', function (req, res, next) {
     if (!error) {
         res.send('index.html');
     } else {
@@ -47,8 +54,8 @@ app.get("/movies", function (req, res, next) {
       });
   });
 
-//Route som raderar specifik data från databasen som innehåller ID numret som skickas med
-app.delete("/movies:id", function(req, res) {
+//Route som raderar data från databasen innehållandes angivet ID
+app.delete("/movies:id", function(req, res, next) {
     database.get(req.params.id).then(function(result) {
         return database.remove(result);
     }).then(function(result) {
@@ -58,7 +65,7 @@ app.delete("/movies:id", function(req, res) {
 });
 
 //Route som postar ny data till movie_rating databasen
-app.post("/addmovies", function (req, res) {
+app.post("/addmovies", function (req, res, next) {
   database.post(req.body).then(function(result) {
     res.sendFile(path.join(__dirname+'/public/mymovies.html'));
   });
