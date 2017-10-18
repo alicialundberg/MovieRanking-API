@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.1",
+    "cheerio": "^1.0.0-rc.2",
+    "child_process": "^1.0.2",
     "express": "^4.15.4",
     "path": "^0.12.7",
-    "pouchdb": "^6.3.4"
+    "pouchdb": "^6.3.4",
+    "request": "^2.83.0"
   }
 }

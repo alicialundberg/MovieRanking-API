@@ -3,14 +3,19 @@ var bodyParser = require("body-parser");
 var Express = require("express");
 var error = Error("error");
 var path = require("path");
+var scraper = require('./lib/scraper');
+var scraper2 = require('./lib/stream');
 
 var app = Express();
 
 //Här skapas den lokala databasen, mapp movie_rating
 var database = new PouchDB('movie_rating');
 
+
 //Här skapas en remote CouchDB databas som ska synkas mot den lokala databasen
 var remoteDB = 'http://localhost:5984/movie_rating/'
+var url = 'http://www.imdb.com/movies-in-theaters/?ref_=cs_inth';
+var url2 = 'https://www.moviezine.se/streamingtips'
 
 sync();
 
@@ -70,6 +75,30 @@ app.post("/addmovies", function (req, res, next) {
     res.sendFile(path.join(__dirname+'/public/mymovies.html'));
   });
 });
+
+app.get("/toplist", function (req, res, next) {
+  var newchar = ' - '
+  scraper.newReleased(url)
+    .then((data) => {
+      var toplistmovies = data.title.replace(/[(]/g, newchar).split(')');
+      res.send(toplistmovies);
+    })
+    .catch((error) => {
+      console.log('error scrapping data');
+    })
+})
+
+app.get("/streamlist", function (req, res, next) {
+  var newchar = ' - '
+  scraper2.streamingList(url2)
+    .then((data) => {
+      var onlinelist = data.title.replace(/[(]/g, newchar).split(')');
+      res.send(onlinelist);
+    })
+    .catch((error) => {
+      console.log('error scrapping data');
+    })
+})
 
 app.listen(8080, function (error) {
     if (!error) {
